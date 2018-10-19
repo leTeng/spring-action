@@ -1,6 +1,6 @@
-package com.eTeng.mode.java.config.impl;
+package com.eTeng.mode.bean.impl;
 
-import com.eTeng.mode.java.config.interfaces.Quest;
+import com.eTeng.mode.bean.interfaces.Quest;
 import org.springframework.stereotype.Component;
 
 /**

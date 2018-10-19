@@ -1,4 +1,4 @@
-package com.eTeng.mode.java.config.interfaces;
+package com.eTeng.mode.bean.interfaces;
 
 /**
  * 骑士
