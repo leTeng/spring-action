@@ -25,11 +25,11 @@ public class ResourceExistCondition implements Condition{
          *
          *      1.ConditionContext:
          *
-         *          getResourceLoader():
-         *          getBeanFactory():
-         *          getClassLoader():
-         *          getEnvironment():
-         *          getRegistry():
+         *          getRegistry(): 可以检查Bean的定义
+         *          getResourceLoader():获取资源加载器
+         *          getBeanFactory():可以检查Bean的存在和检查Bean属性
+         *          getClassLoader():可以获取类加载器,判断类是否存在
+         *          getEnvironment(): 可以获取环境变量
          *
          *
          *      2.AnnotatedTypeMetadata:
