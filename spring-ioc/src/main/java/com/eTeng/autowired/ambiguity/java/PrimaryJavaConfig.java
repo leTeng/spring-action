@@ -22,7 +22,7 @@ public class PrimaryJavaConfig{
 
     @Bean
 //    @Primary //设置为自动装配首先bean标识。
-    public Animal dog(){  
+    public Animal dog(){
         return new Dog();
     }
 
