@@ -167,15 +167,15 @@
      }
      ````
   - xml 为主
-   > 将JavaConfig类在xml到声明为一个bean,并开启扫描组件配置,这样所有方式声明的bea n都可以创建。
-   ````java
-     <!--扫描组件-->
-     <context:component-scan base-package="com.eTeng.mode.bean.impl"/>
-     <!--xml 声明bean-->
-     <bean id="barve" class="com.eTeng.mode.bean.impl.BarveKnight"/>
-     <!--JavaConfig 混合使用-->
-     <bean class="com.eTeng.mode.java.config.BarveKnightConfig"/>
-   ````
+    > 将JavaConfig类在xml到声明为一个bean,并开启扫描组件配置,这样所有方式声明的bea n都可以创建。
+    ````java
+      <!--扫描组件-->
+      <context:component-scan base-package="com.eTeng.mode.bean.impl"/>
+      <!--xml 声明bean-->
+      <bean id="barve" class="com.eTeng.mode.bean.impl.BarveKnight"/>
+      <!--JavaConfig 混合使用-->
+      <bean class="com.eTeng.mode.java.config.BarveKnightConfig"/>
+    ````
   
 - **xml配置命名空间的使用**
 
