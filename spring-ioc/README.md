@@ -181,14 +181,14 @@
 - **xml配置命名空间的使用**
   > 命名空间只能使用在xml配置文件中,示例了在使用xml声明bean是,使用命名空间`c:`代替\<constructor>和使用`p:`代替\<property>。
   - **c:**
-　　　　　　　　　　　　　![c命名空间使用图解](http://193.112.51.188:8080/images/cNameSpace.PNG)  </br>
+　　　　　　　　　　　![c命名空间使用图解](https://github.com/leTeng/spring-action/raw/master/image/cNameSpace.PNG)  </br>
     - 构造器参数名-字面量
     - 构造器参数名--引用bean
     
     - 构造器参数索引-字面量
     - 构造器参数索引--引用bean
   - **p:**
-     　　　　　　　　　　![c命名空间使用图解](http://193.112.51.188:8080/images/pNameSpace.PNG) </br>
+     　　　　　　　　![c命名空间使用图解](https://github.com/leTeng/spring-action/raw/master/image/cNameSpace.PNG) </br>
     - 属性参数名-字面量
     - 属性参数名--引用bean
 
