@@ -188,7 +188,7 @@
     - 构造器参数索引-字面量
     - 构造器参数索引--引用bean
   - **p:**
-     　　　　　　　　![c命名空间使用图解](https://github.com/leTeng/spring-action/raw/master/image/cNameSpace.PNG) </br>
+     　　　　　　　　　　　　![c命名空间使用图解](https://github.com/leTeng/spring-action/raw/master/image/cNameSpace.PNG) </br>
     - 属性参数名-字面量
     - 属性参数名--引用bean
 
