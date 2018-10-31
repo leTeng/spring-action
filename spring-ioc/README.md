@@ -138,7 +138,7 @@
      }
    ````
 - **xml**
-> 使用一个<bean></bean>标签声明一个bean。指定其id和class(bean的全限定名),其还可以配置<controltor>和<property>等。
+> 使用一个<bean></bean>标签声明一个bean。指定其id和class(bean的全限定名),其还可以配置\<controltor>和\<property>等。
  
   ````java
    <bean id="barveKnightConfig" class="com.eTeng.mode.java.config.BarveKnightConfig"/>
