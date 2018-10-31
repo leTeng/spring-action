@@ -80,7 +80,7 @@
        ````
       - xml
        
-       ````java
+       ````xml
 
        <bean class="com.eTeng.autowired.ambiguity.bean.impl.Bird" primary="true"/>
 
@@ -141,7 +141,7 @@
 - **xml**
 > 使用一个<bean></bean>标签声明一个bean。指定其id和class(bean的全限定名),其还可以配置\<constructor>和\<property>等。
  
-  ````java
+  ````xml
    <bean id="barveKnightConfig" class="com.eTeng.mode.java.config.BarveKnightConfig"/>
   ````
  
@@ -169,7 +169,7 @@
      ````
   - xml 为主
     > 将JavaConfig类在xml到声明为一个bean,并开启扫描组件配置,这样所有方式声明的bea n都可以创建。
-    ````java
+    ````xml
       <!--扫描组件-->
       <context:component-scan base-package="com.eTeng.mode.bean.impl"/>
       <!--xml 声明bean-->
