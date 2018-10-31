@@ -9,5 +9,5 @@ import org.springframework.context.annotation.Configuration;
  * @Description 使用自定义的限定符解决自动装配歧义
  */
 @Configuration
-public class qualifierJavaConfig{
+public class QualifierJavaConfig{
 }

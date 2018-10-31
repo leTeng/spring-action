@@ -5,10 +5,7 @@ import com.eTeng.autowired.ambiguity.bean.impl.Cat;
 import com.eTeng.autowired.ambiguity.bean.impl.ConponentMark;
 import com.eTeng.autowired.ambiguity.bean.impl.Dog;
 import com.eTeng.autowired.ambiguity.bean.interfaces.Animal;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.*;
 
 /**
  * @FileName AmbiguityJavaConfig.java
@@ -17,10 +14,11 @@ import org.springframework.context.annotation.Primary;
  * @Description 自动转配歧义配置(有多个相同类型的bean)
  */
 @Configuration
-@ComponentScan(basePackageClasses = ConponentMark.class)
+@ImportResource(locations = "classpath:autowirdAmbiguityPrimary.xml")
+//@ComponentScan(basePackageClasses = ConponentMark.class)
 public class PrimaryJavaConfig{
 
-    @Bean
+   /* @Bean
 //    @Primary //设置为自动装配首先bean标识。
     public Animal dog(){
         return new Dog();
@@ -30,5 +28,5 @@ public class PrimaryJavaConfig{
     @Primary //设置为自动装配首先bean。
     public Animal bird(){
         return new Bird();
-    }
+    }*/
 }

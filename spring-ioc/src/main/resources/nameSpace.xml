@@ -2,15 +2,20 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
        xmlns:c="http://www.springframework.org/schema/c"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!--rescueDemseQuest 由JavaConfig 创建-->
     <!--  <bean id="barveKnight" class="com.eTeng.mode.bean.impl.BarveKnight">
           <constructor-arg index="0" ref="rescueDemseQuest"/>
           <constructor-arg index="1" value="barve"/>
       </bean>-->
-
+    <context:component-scan base-package="com.eTeng.mode.bean.impl"/>
     <!--JavaConfig 混合使用-->
     <bean class="com.eTeng.mode.java.config.BarveKnightConfig"/>
 
