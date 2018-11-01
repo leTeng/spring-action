@@ -11,5 +11,5 @@ public interface Perform{
     /**
      * 正在表演
      */
-    void processPerformance();
+    void processShow();
 }

@@ -1,6 +1,8 @@
 package com.eTeng.point.impl;
 
 import com.eTeng.point.interfaces.Perform;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @FileName MagicPerform.java
@@ -10,7 +12,11 @@ import com.eTeng.point.interfaces.Perform;
  */
 public class MagicPerform implements Perform{
 
-    public void processPerformance(){
+    private static final Logger LOGGER = LoggerFactory
+            .getLogger(MagicPerform.class);
 
+    
+    public void processShow(){
+        LOGGER.info("Wonderful magic show");
     }
 }
