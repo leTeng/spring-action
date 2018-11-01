@@ -231,7 +231,7 @@
           />
         ````
   - **p:**
-     　　　　　　　　　　　　![c命名空间使用图解](https://github.com/leTeng/spring-action/raw/master/image/cNameSpace.PNG) </br>
+     　　　　　　　　　　　　![p命名空间使用图解](https://github.com/leTeng/spring-action/raw/master/image/pNameSpace.PNG) </br>
     - 属性参数名
       
       - 字面量
@@ -250,6 +250,119 @@
 ### 高级装配
 
 * profile
+  
+  > profile 提供了在不同的环境创建不同的bean(依据启动时激活的环境)，相对于maven在构建时选择环境
+    spring与之区别在于一个是运行时(spring)一个是构建时(maven)。运行时相对于构建时，在每次的更
+    改后不用每次都重新构建。
+  
+　　　　**注意:** 如果没有@profile声明的方法会默认自动创建bean，不受激活环境影
+　　　　　　  响
+　　　　
+  - JavaConfig
+    > @profile可以使用在类级别或者方法级别上
+        
+      ````java
+        /**
+         * 类级别
+         */
+        @Configuration
+        @Profile("dev") //当激活profile为dev则创建该bean
+        public class ProfileJavaConfig {
+            
+            @Bean
+            public ProfileBean developmentProfileBean(){
+                return new DevelopmentProfileBean();
+            }
+        }
+        
+        /**
+         * 方法级别
+         */
+        @Configuration
+        public class ProfileJavaConfig {
+            
+            @Bean
+            @Profile("dev")
+            public ProfileBean developmentProfileBean(){
+                return new DevelopmentProfileBean();
+            }
+            
+            @Bean
+            @Profile("test")
+            public ProfileBean testProfileBean(){
+                return new TestProfileBean();
+            }
+            
+            //会自动创建,不受环境影响
+            @Bean
+            public CommosBean commosBean(){
+                return new CommosBean();
+            }
+        }  
+      ````
+    
+  - xml
+    > 在xml配置不同环境的bean，需要设置`<beans>`标签的profile属性。
+      为了更好的给不同环境的bean分类，可以使用`<beans>`嵌套。
+    ````xml
+        <beans>
+           
+            <beans profile="dev">
+                <bean id="devBean" class="com.eTeng.profile.bean.impl.DevelopmentProfileBean"/>
+            </beans>
+            
+            <beans profile="produce">
+                <bean id="prodBean" class="com.eTeng.profile.bean.impl.ProduceProfileBean"/>
+            </beans>
+            
+            <beans profile="test">
+                <bean id="testBean" class="com.eTeng.profile.bean.impl.TestProfileBean"/>
+            </beans>
+        
+            <bean id="commonBean" class="com.eTeng.profile.bean.impl.CommosBean"/>
+        </beans>
+    ````
+  - 激活profile 
+    
+    > 五种激活profile方式,都是配置两个参(spring.profiles.active 和 spring.profiles.default)
+        数中的一个其中常用的是在DispatcherServlet配置两个参数中的一个。
+            
+    - 配置DispatcherServlet初始化参数
+      ````xml
+        <web-app>
+             <servlet>
+                <servlet-name>dispatcherServlet</servlet-name>
+                <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+                <init-param>
+                    <!--设置默认激活环境-->
+                    <param-name>spring.profiles.default</param-name>
+                    <param-value>dev</param-value>
+                </init-param>
+            </servlet>
+            <servlet-mapping>
+                <servlet-name>dispatcherServlet</servlet-name>
+                <url-pattern>/</url-pattern>
+            </servlet-mapping>
+        </web-app>
+      ````  
+    - 配置web服务应用的上下文参数
+        `待补充`
+    - 配置为JNDI的条目
+        `待补充`  
+    - 配置为环境变量
+        `待补充`
+    - 配置为JVM系统属性
+        `待补充`  
+    - 在测试类中使用
+      ````java
+        @RunWith(SpringJUnit4ClassRunner.class)
+        @ActiveProfiles("dev") //激活 Profile
+        @ContextConfiguration(classes = ProfileJavaConfig.class)
+        public class ProfileJavaConfigTest {
+        
+        }  
+      ````   
+    
 * 条件化bean
 * 自动注入歧义性
 * 外部属性
