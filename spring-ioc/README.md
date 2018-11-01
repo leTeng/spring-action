@@ -186,16 +186,66 @@
   > 命名空间只能使用在xml配置文件中,示例了在使用xml声明bean是,使用命名空间`c:`代替\<constructor>和使用`p:`代替\<property>。
   - **c:**
 　　　　　　　　　　　![c命名空间使用图解](https://github.com/leTeng/spring-action/raw/master/image/cNameSpace.PNG)  </br>
-    - 构造器参数名-字面量
-    - 构造器参数名--引用bean
+    - 构造器参数名
     
-    - 构造器参数索引-字面量
-    - 构造器参数索引--引用bean
+      - 字面量
+        ````xml
+          <bean class="com.eTeng.mode.java.config.BarveKnightConfig"
+              c:knightName="barve"
+          />
+        ````
+      - 引用bean
+        ````xml
+          <bean class="com.eTeng.mode.java.config.BarveKnightConfig"
+              c:quest-ref="rescueDemseQuest"
+          />
+        ````
+    - 构造器参数索引
+      
+      **注意** 构造器参数索引的前面之所以加多了一个'_'，是因为xml属性不能以数字开头。
+              并且当索引值为0时，可以隐藏索引。  
+      - 字面量  
+        ````xml
+          <bean class="com.eTeng.mode.java.config.BarveKnightConfig"
+              c:_1="barve"
+          />
+        ````
+      - 引用bean  
+        ````xml
+          <bean class="com.eTeng.mode.java.config.BarveKnightConfig"
+              c:_1-ref="barve"
+          />
+        ````
+    - 索引值为零(第一个构造参数)
+       
+      - 字面量  
+        ````xml
+          <bean class="com.eTeng.mode.java.config.BarveKnightConfig"
+              c:_-="barve"
+          />
+        ````
+      - 引用bean  
+        ````xml
+          <bean class="com.eTeng.mode.java.config.BarveKnightConfig"
+             c:_-ref="barve" 
+          />
+        ````
   - **p:**
      　　　　　　　　　　　　![c命名空间使用图解](https://github.com/leTeng/spring-action/raw/master/image/cNameSpace.PNG) </br>
-    - 属性参数名-字面量
-    - 属性参数名--引用bean
-
+    - 属性参数名
+      
+      - 字面量
+        ````xml
+          <bean class="com.eTeng.mode.java.config.BarveKnightConfig"
+             p:knightName="barve" 
+          />
+        ````
+      - 引用bean
+        ````xml
+          <bean class="com.eTeng.mode.java.config.BarveKnightConfig"
+              p:quest-ref="rescueDemseQuest" 
+          />
+        ````     
 
 ### 高级装配
 
