@@ -3,6 +3,9 @@ package com.eTeng.mode.java.config;
 import com.eTeng.mode.bean.impl.BarveKnight;
 import com.eTeng.mode.bean.impl.RescueDemseQuest;
 import com.eTeng.mode.bean.interfaces.Quest;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -23,7 +26,7 @@ import org.springframework.context.annotation.ImportResource;
 @Configuration
 //@Import(BarveKnightConfig.class) //当一个配置类过于膨大,
    // 使用多个JavaConfig配置,然后使用@import注解整合成一个JavaConfig
-@ImportResource("classpath:/applicationContext.xml") //改注解将xml配置文件bean导入到JavaConfig中。达成混合配置
+//@ImportResource("classpath:/applicationContext.xml") //改注解将xml配置文件bean导入到JavaConfig中。达成混合配置
 public class BarveKnightConfig{
 
     /**

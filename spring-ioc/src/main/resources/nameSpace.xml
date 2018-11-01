@@ -15,10 +15,10 @@
           <constructor-arg index="0" ref="rescueDemseQuest"/>
           <constructor-arg index="1" value="barve"/>
       </bean>-->
-    <context:component-scan base-package="com.eTeng.mode.bean.impl"/>
+    <!--<context:component-scan base-package="com.eTeng.mode.bean.impl"/>-->
     <!--JavaConfig 混合使用-->
-    <bean class="com.eTeng.mode.java.config.BarveKnightConfig"/>
-
+    <!--<bean class="com.eTeng.mode.java.config.BarveKnightConfig"/>-->
+    <bean id= "rescueDemseQuest" class="com.eTeng.mode.bean.impl.RescueDemseQuest"/>
     <!--使用命名空间创建bean,其中有两个命名空间c: 构造器(ref 与 value) p:属性(ref 与 value)-->
 
     <!-- c -->
