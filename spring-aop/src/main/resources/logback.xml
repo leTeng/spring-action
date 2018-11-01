@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--logback 简介-->
+	<!--
+		1.由三个部分组成：logger、appender、layout
+		
+			logger: 存放日志对象和定义日志级别和类型
+			appeder：主要作用使用不同的appeder实例指定日志的目的: 控制台、文件、远程服务器、数据库等
+			layout: 格式化输出日志信息
+		
+		2.LoggerContext: logger实例的容器(树状),并且对logger排序。
+
+		3.logger级别：TRACE DEBUG INFO WRAN ERROR
+				
+			级别的特性1：如果logger没有分配级别,从loggerConotext树中最近祖先上继承级别。
+						 如果祖先都没有,继承root的日记级别，默认为DEBUG。
+			
+			级别的特性2：请求记录日志级别高于或者等于logger日志级别时才输出日志。	
+			
+		4.一个<configuration>允许 多个appener 和 多个logger,但只允许一个root
+	
+	-->
+
+
+
+<!-- scan:扫描更新配置文件 ， scanPeriod : 时间隔，用于扫描配置文件 , debug: 打印logback内部运行时信息 -->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+	
+	<!-- 定义参数常量 -->
+	<!-- 日志级别 ：TRACE DEBUG INFO WRAN ERROR -->
+	<!-- 系统输出日志信息的级别(以上) -->
+	<property name="log.level" value="DUBUG"></property>
+	<!--项目名称(用于生成日志文件路径)-->
+	<property name="project.name" value="spring-aop"/>
+	<!-- 文件的存储路径 -->
+	<property name="log.filePath" value="${CATALINA_HOME}\\logs\\${project.name}"></property>
+	<!-- 日志文件最大历史存储数 -->
+	<property name="log.maxHistory" value="30"></property>   	 
+	<!-- 日志输出的格式  时间毫秒 线程 日志级别 对应的类 日志信息 换行-->
+	<property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"></property>
+
+	
+	
+	<!-- 创建文件日志输出对象 -->
+	<appender name="spring_ioc_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	    <!-- 文件保存 -->
+	    <!--<file>${log.filePath}\${project.name}\</file>-->
+	    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+	        <!-- 日志滚动保存 -->
+	        <fileNamePattern>${log.filePath}/%d{yyyy-MM-dd}.tar.gz</fileNamePattern>
+	        <!-- 最大已保存日志文件数目 -->
+	        <maxHistory>${log.maxHistory}</maxHistory>
+	    </rollingPolicy>
+	    <!-- 日志输出格式 -->
+	    <encoder>
+	        <pattern>${log.pattern}</pattern>
+	    </encoder>
+	    <!-- 日志级别过滤 -->
+	    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+	        <level>${log.level}</level>
+	        <onMatch>ACCEPT</onMatch>
+	        <onMisMatch>DENY</onMisMatch>
+	    </filter>
+	</appender>
+	
+	<!-- 创建控制台日志输出对象 -->
+	<appender name="spring_ioc_console" class="ch.qos.logback.core.ConsoleAppender">
+	    <encoder>
+	        <pattern>${log.pattern}</pattern>
+	    </encoder>
+	</appender>
+	
+	
+	<!-- logger 引用 Appender -->
+	<!-- 1.name 指定受此logger约束的包或者类。
+			  INFO以上级别日志输出到spring_ioc_file appender 和 spring_ioc_console appender
+
+		 2.appender-ref 将多个appender实例注入到logger中。		
+			
+		 3.additivity = true,当子logger实例没有配置日记级别,那么logger向上获取祖先日志级别(直到root)。-->	
+	<logger name="com.eTeng" level="TRACE" additivity="true">
+	    <appender-ref ref="spring_ioc_file"/>
+		<appender-ref ref="spring_ioc_console"/>
+	</logger>
+	
+	<!-- root 是所有的logger的父组件(其实也是一个logger),所有的logger继承该root.-->
+	<root level="DEBUG">
+	    <!--<appender-ref ref=""></appender-ref>-->
+	</root>
+</configuration>
