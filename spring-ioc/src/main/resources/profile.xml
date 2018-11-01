@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <beans profile="dev">
+        <bean id="devBean" class="com.eTeng.profile.bean.impl.DevelopmentProfileBean"/>
+    </beans>
+    <beans profile="produce">
+        <bean id="prodBean" class="com.eTeng.profile.bean.impl.ProduceProfileBean"/>
+    </beans>
+    <beans profile="test">
+        <bean id="testBean" class="com.eTeng.profile.bean.impl.TestProfileBean"/>
+    </beans>
+</beans>
