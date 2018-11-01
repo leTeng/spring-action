@@ -15,7 +15,8 @@
 
           public void embark(){
               System.out.print("embark success");
-     }
+          }
+      }
      ```
   - 扫描bean
   > 使用@componentScan进行组件扫描,参数为包的路径或者标识的Class。没有参数就以当前配置类的包路径作为基础包。
@@ -71,12 +72,12 @@
         @Configuration
         public class PrimaryJavaConfig{
 
-        @Bean
-        @Primary //设置为自动装配首先bean标识。
-        public Animal dog(){
-            return new Dog();
+            @Bean
+            @Primary //设置为自动装配首先bean标识。
+            public Animal dog(){
+                return new Dog();
+            }
         }
-
        ````
       - xml
        
@@ -125,7 +126,7 @@
        public Quest rescueDemseQuest(){
            return new RescueDemseQuest();
        }
-       
+     }  
     ````
   - 方法参数依赖
      > 方法参数依赖解决了当中方式及配置时,JavaConfig无法依赖其他方式配置的bean。也会带来新的问题就是**自动装配的歧义性**
@@ -136,6 +137,7 @@
        @Bean
        public BarveKnight barveKnight(Quest quest){
            return new BarveKnight(quest);
+       }
      }
    ````
 - **xml**
@@ -171,11 +173,13 @@
     > 将JavaConfig类在xml到声明为一个bean,并开启扫描组件配置,这样所有方式声明的bea n都可以创建。
     ````xml
       <!--扫描组件-->
+      <beans>
       <context:component-scan base-package="com.eTeng.mode.bean.impl"/>
       <!--xml 声明bean-->
       <bean id="barve" class="com.eTeng.mode.bean.impl.BarveKnight"/>
       <!--JavaConfig 混合使用-->
       <bean class="com.eTeng.mode.java.config.BarveKnightConfig"/>
+      </beans>
     ````
   
 - **xml配置命名空间的使用**
