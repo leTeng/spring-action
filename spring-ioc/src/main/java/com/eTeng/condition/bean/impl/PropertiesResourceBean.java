@@ -4,7 +4,7 @@ import com.eTeng.condition.bean.interfaces.ResourceBean;
 
 /**
  * @FileName ResourceBean.java
- * @Author 梁怡腾
+ * @Author eTeng
  * @Date 2018/10/30 14:42
  * @Description
  */

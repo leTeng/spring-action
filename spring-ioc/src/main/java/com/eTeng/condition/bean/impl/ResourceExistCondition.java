@@ -9,7 +9,7 @@ import java.io.InputStream;
 
 /**
  * @FileName ResouceExistCondition.java
- * @Author 梁怡腾
+ * @Author eTeng
  * @Date 2018/10/30 14:13
  * @Description 条件化创建bean的实现
  */
