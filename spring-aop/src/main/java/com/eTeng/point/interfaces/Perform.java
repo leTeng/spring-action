@@ -2,14 +2,20 @@ package com.eTeng.point.interfaces;
 
 /**
  * @FileName Perform.java
- * @Author 梁怡腾
+ * @Author eTeng
  * @Date 2018/11/1 16:07
  * @Description
  */
 public interface Perform{
 
     /**
-     * 正在表演
+     * 随机频道表演
      */
     void processShow();
+
+    /**
+     * 指定频道的表演
+     * @param itemNum
+     */
+    void processShow(int itemNum);
 }
