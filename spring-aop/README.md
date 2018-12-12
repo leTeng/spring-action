@@ -25,11 +25,12 @@
       > 描述：通知定义了切面的**具体**工作和**何时**工作。
       
       - 通知包含：
-        1. `BeforeAdevice`  前置通知：目标方法执行之前执行
-        2. `AfterAdevice`   后置通知：目标方法执行之后执行
-        3. `AfterReturnAdevice`  返回通知：目标方法返回之后执行    
-        4. `AfterThrowAdevice`  异常通知：目标方法抛出异常之后执行
-        5. `ARound`             环绕通知：使用自定义行为包裹目标方法
+        
+        1. `@BeforeAdevice`  前置通知：目标方法执行之前执行
+        2. `@AfterAdevice`   后置通知：目标方法执行之后执行
+        3. `@AfterReturnAdevice`  返回通知：目标方法返回之后执行    
+        4. `@AfterThrowAdevice`  异常通知：目标方法抛出异常之后执行
+        5. `@ARound`             环绕通知：使用自定义行为包裹目标方法
       ---
   
   * 连接点(join point)
@@ -138,7 +139,7 @@
        
     * 定义切面
     
-      1. Aspect注解驱动    
+      - Aspect注解驱动    
     
         ```java
           @Aspect //定义为一个切面
@@ -184,12 +185,37 @@
               }
           }
         ```
-    > 解析：使用@Aspect注解声明一个Pojo为切面,同时还是一个Pojo。@before、@after等注解定义了通知时机
+        > 解析：使用@Aspect注解声明一个Pojo为切面,同时还是一个Pojo。@before、@after等注解定义了通知时机
            做对应的工作。使用@pointcut标识一个方法相当于定义了一个切点。在定义通知时机时，可直接套用定
            义好的切点方法名。这样也可以重复使用切点。不需要每次重复写切点匹配。
             
-      * xml定义
+      - xml定义
         
+        ```xml
+            <bean>
+                <aop:config>
+                    <!--定义一个切面,并引用通知-->
+                    <aop:aspect ref="performAdvice" id="perform">
+                        <!--定义一个切点,精确到方法级别-->
+                        <aop:pointcut id="performPoint" expression="execution(* com.eTeng.point.interfaces.Perform.processShow())"/>
+                        <!--定义两个前置通知-->
+                        <aop:before method="noElectricity" pointcut-ref="performPoint"/>
+                        <aop:before method="openTv" pointcut-ref="performPoint"/>
+                        <!--定义一个后置通知-->
+                        <aop:after method="offElectricity" pointcut-ref="performPoint"/>
+                        <!--定义一个返回通知-->
+                        <aop:after-returning method="closeTv" pointcut-ref="performPoint"/>
+                        <!--定义一个异常通知-->
+                        <aop:after-throwing method="fix" pointcut-ref="performPoint"/>
+                    </aop:aspect>
+                </aop:config>
+            </bean>
+        ```
+        > 描述：多个切面的配置在<aop:config>标签下,可以在标签下定义多个公共切点应用于多个切面。
+               使用一个<aop:aspect>定义一个切点,使用id属性标识每个切点,使用AspectJ表达式匹配
+               连接点。使用<aop:before>、<aop:after>、<aop:returning>定义通知,每个标签代表
+               不同通知时机。pointcut-ref属性表示通知哪一个目标方法。
+                          
     * 开启自动代理
         
       1. 注解驱动
@@ -209,6 +235,7 @@
               }
           }
         ```
+        
       2. xml配置
       
         ```xml
@@ -224,8 +251,11 @@
         
     * 环绕通知
         
-        > 描述：环绕通知可以将被通知的目标方法包裹起来,在环绕通知使用ProceedJoinPoint
+      > 描述：环绕通知可以将被通知的目标方法包裹起来,在环绕通知使用ProceedJoinPoint
                 接口的proceed来通知目标调用。
+                
+      - 注解驱动
+        
         ```java
           @Aspect //声明切面
           public class PerformAdvice2{
@@ -255,6 +285,17 @@
           }
         ```
         
+      - xml配置
+          
+        ```xml
+            <aop:aspect ref="performAdvice2" id="perform2">
+                <!--定义一个切点,精确到方法级别-->
+                <aop:pointcut id="performPoint" expression="execution(* com.eTeng.point.interfaces.Perform.processShow())"/>
+                <!--定义环绕通知-->
+                <aop:before method="watchPerform" pointcut-ref="performPoint"/>
+            </aop:aspect>
+        ```
+        
         `注意：` 环绕通知可以在一个通知实现其他的四个通知逻辑(before.after等)。环绕通知方法需要一个
                 ProceedJoinPoint接口,通过调用Proceed()函数调用目标方法。如果不调用proceed()函数
                 那么通知阻塞了被通知的调用。也可以重复调用proceed()函数，一般用来失败重试。       
@@ -272,53 +313,68 @@
                 限定符的参数名称**和**被通知方法的参数名称**一样。**args限定符的参数**也要和**切面定义的通知
                 方法参数**一致。
         
-        * 实现观看不同频道表演,记录频道播放次数
+        **实现观看不同频道表演,记录频道播放次数**
         
-        ```java
-          @Aspect
-          public class WatchPerformCounterAdvice{
-          
-              private static final Logger LOGGER = LoggerFactory
-                      .getLogger(Television.class);
-          
-              private Map<Integer,Integer> counter = new HashMap<Integer,Integer>();
-          
-              //选择参数为int类型的连接点,并且将参数传递给通知方法
-              @Pointcut("execution(* com.eTeng.point.interfaces.Perform.processShow(int)) " +
-                      "&& args(itemNum)")
-              public void showWithItem(int itemNum){}
-          
-          
-              @Before("showWithItem(itemNum)")
-              public void recordCounter(int itemNum){
-                  LOGGER.info("record itemNum:" + itemNum);
-                  Integer count = getCounter(itemNum);
-                  counter.put(itemNum,count+1);
-              }
-          
-              public Integer getCounter(int itemNum){
-                  return counter.containsKey(itemNum) ? counter.get(itemNum) : 0;
-              }
-          }
-        ```        
+        - 注解驱动
         
-        ```java
-        public class AspectJavaConfigTest{
-                
-          @Autowired
-          Perform perform;
+          ```java
+              @Aspect
+              public class WatchPerformCounterAdvice{
+              
+                  private static final Logger LOGGER = LoggerFactory
+                          .getLogger(Television.class);
+              
+                  private Map<Integer,Integer> counter = new HashMap<Integer,Integer>();
+              
+                  //选择参数为int类型的连接点,并且将参数传递给通知方法
+                  @Pointcut("execution(* com.eTeng.point.interfaces.Perform.processShow(int)) " +
+                          "&& args(itemNum)")
+                  public void showWithItem(int itemNum){}
+              
+              
+                  @Before("showWithItem(itemNum)")
+                  public void recordCounter(int itemNum){
+                      LOGGER.info("record itemNum:" + itemNum);
+                      Integer count = getCounter(itemNum);
+                      counter.put(itemNum,count+1);
+                  }
+              
+                  public Integer getCounter(int itemNum){
+                      return counter.containsKey(itemNum) ? counter.get(itemNum) : 0;
+                  }
+              }
+          ```        
+        
+        - xml配置
           
-          @Test
-          public void testSpecifyItem(){
-              perform.processShow(0); //每次选择频道,都会当前频道到通知方法里面。通知方法记录该频道的观看次数。
-              perform.processShow(1);
-              perform.processShow(1);
-              perform.processShow(2);
-              perform.processShow(2);
-              perform.processShow(3);       
-          }      
-        }
-        ```
+          ```xml
+            <!--定义一个切面,通知可访问被通知方法参数-->
+            <aop:aspect ref="wcctAdvice">
+                <!--定义切点表达式,并指明将itemNum(被通知方法的)参数传递到通知方法-->
+                <aop:pointcut id="watchPerformCounter" expression="execution(* com.eTeng.point.interfaces.Perform.processShow(int)) and args(itemNum)"/>
+                <!--定义前置通知-->
+                <aop:before method="recordCounter" pointcut-ref="watchPerformCounter"/>
+            </aop:aspect>
+          ```  
+          
+          **测试**      
+          ```java
+              public class AspectJavaConfigTest{
+                    
+              @Autowired
+              Perform perform;
+              
+              @Test
+              public void testSpecifyItem(){
+                  perform.processShow(0); //每次选择频道,都会当前频道到通知方法里面。通知方法记录该频道的观看次数。
+                  perform.processShow(1);
+                  perform.processShow(1);
+                  perform.processShow(2);
+                  perform.processShow(2);
+                  perform.processShow(3);       
+              }     
+            }
+          ```
         
 - #### 通过切面引入新功能
   
@@ -329,10 +385,31 @@
     
     [AOP引入新功能](https://github.com/leTeng/spring-action/raw/master/image/referenceApi.PNG)   
 
-    ```java
-      
-      
-      
-    ```
+    - 注解驱动
     
+      ```java
+        @Aspect
+        public class PlayAdIntroduce{
+       
+         /*
+          * 1.+ ：表示匹配Perform接口的所有子类引入新接口。
+          * 2.defaultImpl：表示引入功能默认委托目标对象
+          * 3.adAdvice 表示引入功能的接口
+          */
+         @DeclareParents(value = "com.eTeng.point.interfaces.Perform+",
+                 defaultImpl = DeFaultPlayAd.class)
+         public static PlayAd playAd;
+        }  
+      ```
+      
+    - xml配置
+      
+      ```xml
+        <aop:aspect>
+          <aop:declare-parents types-matching="com.eTeng.point.interfaces.Perform+"
+                               implement-interface="com.eTeng.pojo.interfaces.PlayAd"
+                               delegate-ref= "deFaultPlayAd"/>
+        </aop:aspect>
+      ```  
+      
 - #### 注入AspectJ切面
