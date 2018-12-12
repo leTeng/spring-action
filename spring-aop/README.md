@@ -113,7 +113,7 @@
         `如图所示：
         ` 
           
-        [point1](https://github.com/leTeng/spring-action/raw/master/image/point1.PNG)   
+        !　　　　　![point1](https://github.com/leTeng/spring-action/raw/master/image/point1.PNG)   
      
        > 解析：使用了execution指示器执行匹配,‘*’ 代表匹配返回任意类型的方法,‘concert.Performmance.perform(..)’,
           其中concert.Performmance.perform指定了concert包下的Performmance类型的perform方法为连接点，
@@ -123,7 +123,7 @@
         
       `如图所示:`
               
-        [point2](https://github.com/leTeng/spring-action/raw/master/image/point2.PNG)      
+        　　　　　![point2](https://github.com/leTeng/spring-action/raw/master/image/point2.PNG)      
     
       > 解释：使用了execution指示器执行匹配连接点为concert.Performmance.perform。并且使用了within限定了目标对象
            在concert包下。其中使用 && 表示指示器的并关系, || 表示或关系，！表示非关系。在使用xml配置时分别使用
@@ -300,7 +300,7 @@
         
         `如图所示：`
             
-        [访问参数图示](https://github.com/leTeng/spring-action/raw/master/image/adviceParam.PNG)
+        　　![访问参数图示](https://github.com/leTeng/spring-action/raw/master/image/adviceParam.PNG)
 
         `解析：` 同样是使用一个@Pointcut注解定义了一个切点,其中限定了连接点方法参数类型为int。
                 最后还使用了args()限定符,表示被通知方法的参数会传递到通知方法。但需要保证**args
@@ -377,7 +377,7 @@
      
   如图所示：
     
-    [AOP引入新功能](https://github.com/leTeng/spring-action/raw/master/image/referenceApi.PNG)   
+    　　　　　　　　![AOP引入新功能](https://github.com/leTeng/spring-action/raw/master/image/referenceApi.PNG)   
 
     - 注解驱动
     
