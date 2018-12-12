@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @Description 环绕通知
  */
 
-@Aspect //声明切面
+//@Aspect //声明切面
 public class PerformAdvice2{
 
     @Autowired

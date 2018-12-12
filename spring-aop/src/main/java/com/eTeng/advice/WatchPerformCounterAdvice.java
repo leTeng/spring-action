@@ -15,7 +15,7 @@ import java.util.Map;
  * @Date 2018/12/10 17:09
  * @Description 记录观看各个频道观众人数
  */
-@Aspect
+//@Aspect
 public class WatchPerformCounterAdvice{
 
     private static final Logger LOGGER = LoggerFactory
