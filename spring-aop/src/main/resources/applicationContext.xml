@@ -1,6 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <!--开启Spring Aop自动代理-->
+    <aop:aspectj-autoproxy/>
+    <!--目标对象-->
+    <!--<context:component-scan base-package="com.eTeng.point.impl"/>-->
+    <bean class="com.eTeng.point.impl.Television">
+        <property name="items">
+            <list>
+                <value>Magic</value>
+                <value>Sing</value>
+                <value>Dance</value>
+                <value>Piano</value>
+            </list>
+        </property>
+    </bean>
+    <!--通知1-->
+    <bean id="performAdvice" class="com.eTeng.advice.PerformAdvice"/>
+    <!--通知2-->
+    <bean id="performAdvice2" class="com.eTeng.advice.PerformAdvice2"/>
+    <!--通知3-->
+    <bean id="wcctAdvice" class="com.eTeng.advice.WatchPerformCounterAdvice"/>
+    <!--定义引入为接口引入新功能的委托对象-->
+    <bean id="deFaultPlayAd" class="com.eTeng.pojo.DeFaultPlayAd"/>
+    <!--切面配置-->
+    <aop:config>
+        <!--定义一个切面,并引用通知-->
+        <aop:aspect ref="performAdvice" id="perform">
+            <!--定义一个切点,精确到方法级别-->
+            <aop:pointcut id="performPoint" expression="execution(* com.eTeng.point.interfaces.Perform.processShow())"/>
+            <!--定义两个前置通知-->
+            <aop:before method="noElectricity" pointcut-ref="performPoint"/>
+            <aop:before method="openTv" pointcut-ref="performPoint"/>
+            <!--定义一个后置通知-->
+            <aop:after method="offElectricity" pointcut-ref="performPoint"/>
+            <!--定义一个返回通知-->
+            <aop:after-returning method="closeTv" pointcut-ref="performPoint"/>
+            <!--定义一个异常通知-->
+            <aop:after-throwing method="fix" pointcut-ref="performPoint"/>
+        </aop:aspect>
+
+        <!--<aop:aspect ref="performAdvice2" id="perform2">-->
+            <!--&lt;!&ndash;定义一个切点,精确到方法级别&ndash;&gt;-->
+            <!--<aop:pointcut id="performPoint" expression="execution(* com.eTeng.point.interfaces.Perform.processShow())"/>-->
+            <!--&lt;!&ndash;定义环绕通知&ndash;&gt;-->
+            <!--<aop:before method="watchPerform" pointcut-ref="performPoint"/>-->
+        <!--</aop:aspect>-->
+
+        <!--定义一个切面,通知可访问被通知方法参数-->
+        <aop:aspect ref="wcctAdvice">
+            <!--定义切点表达式,并指明将itemNum(被通知方法的)参数传递到通知方法-->
+            <aop:pointcut id="watchPerformCounter" expression="execution(* com.eTeng.point.interfaces.Perform.processShow(int)) and args(itemNum)"/>
+            <!--定义前置通知-->
+            <aop:before method="recordCounter" pointcut-ref="watchPerformCounter"/>
+        </aop:aspect>
+
+        <!--为Bean引入新接口-->
+        <!-- 1.types-matching: 匹配需要被引入新功能的bean, + 表示该接口下的所有实现都被引入新功能
+             2.implement-interface：定义新引入功能的接口
+             3.delegate-ref：引入新功能的具体实现(委托对象)
+        -->
+        <aop:aspect>
+            <aop:declare-parents types-matching="com.eTeng.point.interfaces.Perform+"
+                                 implement-interface="com.eTeng.pojo.interfaces.PlayAd"
+                                 delegate-ref= "deFaultPlayAd"/>
+        </aop:aspect>
+    </aop:config>
 </beans>
