@@ -11,12 +11,17 @@
     <modules>
         <module>spring-ioc</module>
         <module>spring-aop</module>
+        <module>spring-security</module>
     </modules>
 
     <properties>
         <spring.vsersion>4.3.19.RELEASE</spring.vsersion>
         <logback.version>1.1.7</logback.version>
         <slf4j.version>1.7.21</slf4j.version>
+        <druid-version>1.1.12</druid-version>
+        <servlet.vsesion>3.0.1</servlet.vsesion>
+        <logging.version>1.2</logging.version>
+        <mysql.con.version>8.0.12</mysql.con.version>
     </properties>
 
     <dependencies>
@@ -132,6 +137,30 @@
                     <artifactId>slf4j-api</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <!--druid-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druid-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>${logging.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.con.version}</version>
+        </dependency>
+        <!--servlet-->
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${servlet.vsesion}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
