@@ -38,6 +38,5 @@ public class PerformAdvice2{
         }catch(Throwable ex){
             performAdvice.fix();
         }
-
     }
 }
