@@ -150,6 +150,7 @@
                     <webXml>
                         web/WEB-INF/web.xml
                     </webXml>
+                    <warName>spring-security</warName>
                 </configuration>
             </plugin>
         </plugins>
