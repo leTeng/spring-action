@@ -22,8 +22,8 @@ import java.util.List;
  * @Date 2018/12/24 18:31
  * @Description 使用自定义数据构建认证数据
  */
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 public class CustomSecurityConfig extends WebSecurityConfigurerAdapter{
 
     private UserRepository userRepository;

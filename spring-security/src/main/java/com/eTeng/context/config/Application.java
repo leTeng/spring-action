@@ -1,30 +1,49 @@
-package com.eTeng.storage.jdbc.config;
+package com.eTeng.context.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.eTeng.storage.memory.config.SecurityPackage;
+import com.eTeng.storage.memory.controller.ControllerPackage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+
 import javax.sql.DataSource;
 import java.util.Properties;
 
 /**
- * @FileName ContextJavaConfig.java
+ * @FileName Application.java
  * @Author eTeng
- * @Date 2018/12/24 15:53
- * @Description 应用上下文配置
+ * @Date 2018/12/29 16:14
+ * @Description Spring Boot 的启动类
  */
-
-@Configuration
-@PropertySource("classpath:/jdbc.properties") //注入外部资源
-public class ContextJavaConfig{
+@SpringBootApplication
+@ComponentScan(basePackageClasses = {ControllerPackage.class,SecurityPackage.class})
+@PropertySource("classpath:/application.properties")
+public class Application extends SpringBootServletInitializer{
 
     //注入上下文环境属性对象
     @Autowired
     Environment environment;
 
+    //spring boot 入口
+    public static void main(String[] args){
+        SpringApplication.run(Application.class);
+    }
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder){
+        return builder.sources(Application.class);
+    }
+
     @Bean
+    @Primary
     public DataSource dataSource() throws Exception{
 
         DruidDataSource dataSource = new DruidDataSource();

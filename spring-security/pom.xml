@@ -67,6 +67,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <!--security 模块-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

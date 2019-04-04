@@ -14,8 +14,8 @@ import javax.sql.DataSource;
  * @Date 2018/12/24 17:42
  * @Description 扩展该类(WebSecurityConfigurerAdapter)为DelegatingFilterProxy提供委托过滤器
  */
-@Configuration
-@EnableWebSecurity //开启安全
+//@Configuration
+//@EnableWebSecurity //开启安全
 public class JdbcSecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Autowired
