@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence">
+    <persistence-unit name="test_unit">
+        <class>com.eteng.pojo.Users</class>
+        <class>com.eteng.pojo.OmOrder</class>
+        <properties>
+            <property name="hibernate.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+            <property name="hibernate.jdbc.url" value="jdbc:mysql://193.112.51.188:3306/sm_security"/>
+            <property name="hibernate.jdbc.username" value="root"/>
+            <property name="hibernate.jdbc.passwrod" value="19970117"/>
+        </properties>
+    </persistence-unit>
+</persistence>
