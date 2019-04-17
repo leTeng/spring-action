@@ -3,56 +3,56 @@
   ###### jdbc驱动数据源
   > 基于jdbc驱动的数据源。这种数据源是没有连接池化,要么一直使用一个连接或者每次访问创建一个连接的。
   - DriverManagerDataSource: 每次访问数据库都创建一个新的连接,没有提供连接的池化管理。
-   ```java
-   class DataSourceConfig{
-        @Bean
-        public DataSource driverManagerDataSource(@Value("${jdbc.driver.class}") String driverClass,
-                                                  @Value("${jdbc.url}") String url,
-                                                  @Value("${jdbc.username}") String username,
-                                                  @Value("${jdbc.password.key}") String password){
-            DriverManagerDataSource dataSource = new DriverManagerDataSource();
-            dataSource.setDriverClassName(driverClass);
-            dataSource.setUsername(username);
-            dataSource.setPassword(password);
-            dataSource.setUrl(url);
-            return dataSource;
-        }      
-    }
-   ```
+    ```java
+        class DataSourceConfig{
+            @Bean
+            public DataSource driverManagerDataSource(@Value("${jdbc.driver.class}") String driverClass,
+                                           @Value("${jdbc.url}") String url,
+                                           @Value("${jdbc.username}") String username,
+                                           @Value("${jdbc.password.key}") String password){
+                DriverManagerDataSource dataSource = new DriverManagerDataSource();
+                dataSource.setDriverClassName(driverClass);
+                dataSource.setUsername(username);
+                dataSource.setPassword(password);
+                dataSource.setUrl(url);
+                return dataSource;
+            }    
+        }
+    ```
   - SimpleDriverDataSource: 和`DriverManagerDataSource`相似,用于解决特定环境的类加载。
     ```java
-    class DataSourceConfig{
-        @Bean
-        public DataSource simpleDriverDataSource(@Value("${jdbc.driver.class}") String driverClass,
-                                                 @Value("${jdbc.url}") String url,
-                                                 @Value("${jdbc.username}") String username,
-                                                 @Value("${jdbc.password.key}") String password) throws Exception{
-            SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
-            dataSource.setDriverClass((Class<Driver>)Class.forName(driverClass));
-            dataSource.setUsername(username);
-            dataSource.setPassword(password);
-            dataSource.setUrl(url);
-            return dataSource;
+        class DataSourceConfig{
+            @Bean
+            public DataSource simpleDriverDataSource(@Value("${jdbc.driver.class}") String driverClass,
+                                                     @Value("${jdbc.url}") String url,
+                                                     @Value("${jdbc.username}") String username,
+                                                     @Value("${jdbc.password.key}") String password) throws Exception{
+                SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
+                dataSource.setDriverClass((Class<Driver>)Class.forName(driverClass));
+                dataSource.setUsername(username);
+                dataSource.setPassword(password);
+                dataSource.setUrl(url);
+                return dataSource;
+            }
         }
-    }
     ```
   - SingleConnectionDataSource: 每次请求都是提供同一个连接,同样是没有提供连接池化的管理。
        缺点是不支持的并发的访问
     ```java
-    class DataSourceConfig{
-        @Bean
-        public DataSource singleConnectionDataSource(@Value("${jdbc.driver.class}") String driverClass,
-                                                          @Value("${jdbc.url}") String url,
-                                                          @Value("${jdbc.username}") String username,
-                                                          @Value("${jdbc.password.key}") String password){
-            SingleConnectionDataSource dataSource = new SingleConnectionDataSource();
-            dataSource.setDriverClassName(driverClass);
-            dataSource.setUsername(username);
-            dataSource.setPassword(password);
-            dataSource.setUrl(url);
-            return dataSource;       
+        class DataSourceConfig{
+            @Bean
+            public DataSource singleConnectionDataSource(@Value("${jdbc.driver.class}") String driverClass,
+                                                              @Value("${jdbc.url}") String url,
+                                                              @Value("${jdbc.username}") String username,
+                                                              @Value("${jdbc.password.key}") String password){
+                SingleConnectionDataSource dataSource = new SingleConnectionDataSource();
+                dataSource.setDriverClassName(driverClass);
+                dataSource.setUsername(username);
+                dataSource.setPassword(password);
+                dataSource.setUrl(url);
+                return dataSource;       
+            }
         }
-    }
     ```
   ###### 外部数据源
    
@@ -64,45 +64,45 @@
   - `DRUID`
     ````java
     class DataSourceConfig{     
-      @Bean
-      public DataSource druidDataSource(@Value("${jdbc.driver.class}") String driverClass,
+        @Bean
+        public DataSource druidDataSource(@Value("${jdbc.driver.class}") String driverClass,
                                       @Value("${jdbc.url}") String url,
                                       @Value("${jdbc.username}") String username,
                                       @Value("${jdbc.password}") String password,
                                       @Value("${jdbc.password.key}") String passwordKey,
                                       @Value("${jdbc.public.key}") String publicKey) throws Exception{
-        DruidDataSource dataSource = new DruidDataSource();
-        dataSource.setUsername(username);
-        dataSource.setPassword(password);
-        dataSource.setUrl(url);
-        dataSource.setDriverClassName(driverClass);
-    
-        dataSource.setMaxActive(10);
-        dataSource.setInitialSize(5);
-        dataSource.setMaxWait(60000);
-        dataSource.setMinIdle(3);
-    
-        dataSource.setTimeBetweenEvictionRunsMillis(60000);
-        dataSource.setMinEvictableIdleTimeMillis(300000);
-        dataSource.setTestWhileIdle(true);
-        dataSource.setTestOnBorrow(false);
-        dataSource.setTestOnReturn(true);
-        dataSource.setPoolPreparedStatements(true);
-        dataSource.setMaxOpenPreparedStatements(20);
-        // 配置监控过滤器
-        dataSource.setFilters("stat");
-        // 配置合并SQL监控过滤器
-        dataSource.setFilters("mergeStat");
-        // 配置代理监控过滤器
-        dataSource.setProxyFilters(proxyFilters());
-        Properties properties = new Properties();
-    
-        // 配置密码解密秘钥
-        properties.setProperty("config.decrypt","true");
-        properties.setProperty("config.decrypt.key",publicKey);
-        dataSource.setConnectProperties(properties);
-        return dataSource;      
-    }
+            DruidDataSource dataSource = new DruidDataSource();
+            dataSource.setUsername(username);
+            dataSource.setPassword(password);
+            dataSource.setUrl(url);
+            dataSource.setDriverClassName(driverClass);
+            
+            dataSource.setMaxActive(10);
+            dataSource.setInitialSize(5);
+            dataSource.setMaxWait(60000);
+            dataSource.setMinIdle(3);
+            
+            dataSource.setTimeBetweenEvictionRunsMillis(60000);
+            dataSource.setMinEvictableIdleTimeMillis(300000);
+            dataSource.setTestWhileIdle(true);
+            dataSource.setTestOnBorrow(false);
+            dataSource.setTestOnReturn(true);
+            dataSource.setPoolPreparedStatements(true);
+            dataSource.setMaxOpenPreparedStatements(20);
+            // 配置监控过滤器
+            dataSource.setFilters("stat");
+            // 配置合并SQL监控过滤器
+            dataSource.setFilters("mergeStat");
+            // 配置代理监控过滤器
+            dataSource.setProxyFilters(proxyFilters());
+            Properties properties = new Properties();
+            
+            // 配置密码解密秘钥
+            properties.setProperty("config.decrypt","true");
+            properties.setProperty("config.decrypt.key",publicKey);
+            dataSource.setConnectProperties(properties);
+            return dataSource;      
+        }
     }   
     ````
     
@@ -116,32 +116,32 @@
 
   - JdbcTemplate
       ```java
-      /**
-       * 配置JDBC模板,基于参数索引进行参数的绑定
-       * @param druidDataSource 数据源
-       * @return
-       */
-      class JdbcConfig{   
-        @Bean
-        public JdbcTemplate jdbcTemplate(DataSource druidDataSource){
-            return new JdbcTemplate(druidDataSource);
+        /**
+        * 配置JDBC模板,基于参数索引进行参数的绑定
+        * @param druidDataSource 数据源
+        * @return
+        */
+        class JdbcConfig{   
+            @Bean
+            public JdbcTemplate jdbcTemplate(DataSource druidDataSource){
+                return new JdbcTemplate(druidDataSource);
+            }
         }
-      }
       ```
   
   - NamedParameterJdbcTemplate 
     ```java
-    /**
-     * 配置JDBC模板,基于参数名进行参数的绑定
-     * @param druidDataSource
-     * @return
-     */
-    class JdbcConfig{  
-        @Bean
-        public NamedParameterJdbcTemplate namedParameterJdbcTemplate(DataSource druidDataSource){
-            return new NamedParameterJdbcTemplate(druidDataSource);
+        /**
+         * 配置JDBC模板,基于参数名进行参数的绑定
+         * @param druidDataSource
+         * @return
+         */
+        class JdbcConfig{  
+            @Bean
+            public NamedParameterJdbcTemplate namedParameterJdbcTemplate(DataSource druidDataSource){
+                return new NamedParameterJdbcTemplate(druidDataSource);
+            }
         }
-    }
     ```
   - JdbcTemplate的使用
       ```java
@@ -201,8 +201,8 @@
       
    ###### Spring 为Hibernate提供的SessionFactory
       
-   - `LocalSessionFactoryBean:` 适用于Hibernatte3版本,只支持基于XML配置POJO构建SessionFactory(*已弃用*)。
-       ````java
+   - `LocalSessionFactoryBean:` 适用于Hibernatte3版本,只支持基于XML配置POJO构建SessionFactory(**已弃用**)。
+     ````java
         class HibernateConfig {
             @Bean
             public org.springframework.orm.hibernate3.LocalSessionFactoryBean localSessionFactoryBean3(DataSource druidDataSource){
@@ -214,8 +214,8 @@
                 return sessionFactory;
             }
         }
-       ````
-   - `LocalSessionFactoryBean:` 适用于Hibernatte3版本,只支持基于注解配置POJO构建SessionFactory。(*已弃用*)。      
+     ````
+   - `LocalSessionFactoryBean:` 适用于Hibernatte3版本,只支持基于注解配置POJO构建SessionFactory。(**已弃用**)。      
       ````java
         class HibernateConfig {
             @Bean
