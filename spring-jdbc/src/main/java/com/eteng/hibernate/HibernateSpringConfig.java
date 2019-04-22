@@ -5,10 +5,10 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
-import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
-import org.springframework.orm.hibernate4.HibernateTemplate;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.orm.hibernate5.HibernateTemplate;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+
 import javax.sql.DataSource;
 import java.util.Properties;
 
@@ -34,26 +34,26 @@ public class HibernateSpringConfig{
      * @return
      */
 //    @Bean
-    public org.springframework.orm.hibernate3.LocalSessionFactoryBean localSessionFactoryBean3(DataSource druidDataSource){
+   /* public org.springframework.orm.hibernate3.LocalSessionFactoryBean localSessionFactoryBean3(DataSource druidDataSource){
         org.springframework.orm.hibernate3.LocalSessionFactoryBean sessionFactory = new org.springframework.orm.hibernate3.LocalSessionFactoryBean();
         sessionFactory.setDataSource(druidDataSource);
         sessionFactory.setMappingResources("users.hbm.xml");
         Properties prop = new Properties();
         sessionFactory.setHibernateProperties(prop);
         return sessionFactory;
-    }
+    }*/
 
     /**
      * Spring提供Hibernate的支持。适用于Hibernatte3版本,只支持基于注解配置POJO构建SessionFactory。
      * @return
      */
-    public AnnotationSessionFactoryBean annotationSessionFactoryBean(DataSource druidDataSource){
+ /*   public AnnotationSessionFactoryBean annotationSessionFactoryBean(DataSource druidDataSource){
         AnnotationSessionFactoryBean sessionFactory = new AnnotationSessionFactoryBean();
         sessionFactory.setAnnotatedClasses(Users.class);
         Properties prop = new Properties();
         sessionFactory.setHibernateProperties(prop);
         return sessionFactory;
-    }
+    }*/
 
     /**
      * Spring提供Hibernate的支持。适用于Hibernatte4以上版本,支持基于XML配置或者注解配置POJO构建SessionFactory。

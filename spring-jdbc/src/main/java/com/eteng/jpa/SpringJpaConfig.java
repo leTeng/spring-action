@@ -9,8 +9,8 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import javax.sql.DataSource;
 
 /**
- * JPA(Java Persistence Api) java持久化接口的规范,其中的Hibernate是JPA中的
- * 一个实现(还有其他的框架实现)。其中Spring给JPA提供了封装,包括模板类、由Spring的
+ * JPA(Java Persistence Api) java持久化接口的规范,其中Hibernate是JPA中的
+ * 一个实现(还有其他的框架实现)。Spring给JPA提供了封装,包括模板类、由Spring的
  * 上下文管理实体管理器等。Spring Data JPA 是对Spring Data 对 JPA规范的简化。
  * @FileName SpringJpaConfig.java
  * @Author eTeng
@@ -32,7 +32,7 @@ public class SpringJpaConfig{
     }
 
     /**
-     * 配置应用程序类型实体管理器工厂(保证在应用程序下有持久化单元的配置persistence.xml)
+     * 配置容器类型实体管理器工厂
      * @return
      */
     @Bean(name = "entityManagerFactory")
